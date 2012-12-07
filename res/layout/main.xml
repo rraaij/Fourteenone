@@ -1,0 +1,92 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0099cc"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".MainActivity" >
+
+    <TextView
+        android:id="@+id/introText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:maxWidth="@dimen/plnameWidth"
+        android:text="@string/introtext"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textView_p1name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/player_1_name"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#33b5e5"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/editText_pl1name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="21dp"
+        android:ems="@integer/nameSize"
+        android:inputType="textCapWords"
+        android:maxWidth="@dimen/plnameWidth"
+        android:width="@dimen/plnameWidth" >
+    </EditText>
+
+    <TextView
+        android:id="@+id/textView_p2name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/player_2_name"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#33b5e5"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/editText_pl2name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="21dp"
+        android:ems="@integer/nameSize"
+        android:inputType="textCapWords"
+        android:maxWidth="@dimen/plnameWidth"
+        android:width="@dimen/plnameWidth" />
+
+    <TextView
+        android:id="@+id/textView_target"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="@string/game_target"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#33b5e5"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/editText_target"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="@integer/targetSize"
+        android:gravity="center_vertical"
+        android:inputType="number" />
+
+    <Button
+        android:id="@+id/start_game"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/start_game"
+        android:textColor="#33b5e5"
+        android:textSize="50sp"
+        android:textStyle="bold" 
+        android:onClick="onClickStartGame"/>
+
+</LinearLayout>

@@ -1,10 +1,13 @@
 package com.rvr.fourteenone;
 
-import android.os.Bundle;
+import com.rvr.fourteenone.model.GameInfo;
+
 import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.EditText;
 
 public class MainActivity extends Activity {
 
@@ -22,7 +25,20 @@ public class MainActivity extends Activity {
 	}
 	
 	public void onClickStartGame(View view) {
-		Toast.makeText(getApplicationContext(), "Knop geklikt: "+view.getId(), Toast.LENGTH_LONG).show();
+		
+		EditText txt_player1 = (EditText) findViewById(R.id.editText_pl1name);
+		EditText txt_player2 = (EditText) findViewById(R.id.editText_pl2name);
+		EditText txt_target = (EditText) findViewById(R.id.editText_target);
+		
+		GameInfo gameinfo = new GameInfo();
+		gameinfo.setPlayer1(txt_player1.getText().toString());
+		gameinfo.setPlayer2(txt_player2.getText().toString());
+		gameinfo.setTarget(Integer.parseInt(txt_target.getText().toString()));
+		
+		Intent gameIntent = new Intent("com.rvr.fourteenone.GameActivity");
+		gameIntent.putExtra("com.rvr.fourteenone.model.GameInfo", gameinfo);
+		
+		startActivity(gameIntent);
 	}
 
 }

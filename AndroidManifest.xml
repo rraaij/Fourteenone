@@ -6,7 +6,7 @@
 
     <uses-sdk
         android:minSdkVersion="14"
-        android:targetSdkVersion="16" />
+        android:targetSdkVersion="17" />
 
     <application
         android:allowBackup="true"
@@ -23,10 +23,14 @@
             </intent-filter>
         </activity>
         <activity
+            android:label="@string/gameActivity"
             android:name="com.rvr.fourteenone.GameActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_game"
             android:theme="@style/FullscreenTheme" >
+            <intent-filter>
+                <action android:name="com.rvr.fourteenone.GameActivity"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
         </activity>
     </application>
 

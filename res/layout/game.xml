@@ -31,26 +31,30 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <!-- LinearLayout
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content" 
+        android:id="@+id/scoretables">
 
-        <fragment
+        <!-- fragment
             android:id="@+id/scoretablePLayer1"
             android:name="com.rvr.fourteenone.ScoretableFragment"
             android:layout_width="150dp"
             android:layout_height="250dp"
-            android:layout_marginLeft="5dp" 
-            android:layout_marginRight="5dp"/>
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            tools:layout="@layout/scoretable" />
 
         <fragment
             android:id="@+id/scoretablePLayer2"
             android:name="com.rvr.fourteenone.ScoretableFragment"
             android:layout_width="150dp"
-            android:layout_height="250dp" 
+            android:layout_height="250dp"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"/>
-    </LinearLayout-->
+            android:layout_marginRight="5dp"
+            tools:layout="@layout/scoretable" /-->
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

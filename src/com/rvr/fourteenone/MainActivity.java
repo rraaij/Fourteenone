@@ -14,6 +14,7 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
 		setContentView(R.layout.main);
 	}
 
@@ -29,6 +30,11 @@ public class MainActivity extends Activity {
 		EditText txt_player1 = (EditText) findViewById(R.id.editText_pl1name);
 		EditText txt_player2 = (EditText) findViewById(R.id.editText_pl2name);
 		EditText txt_target = (EditText) findViewById(R.id.editText_target);
+		
+		/* STUB DATA */
+		txt_player1.setText("Shane");
+		txt_player2.setText("Earl");
+		txt_target.setText("100");
 		
 		GameInfo gameinfo = new GameInfo();
 		gameinfo.setPlayer1(txt_player1.getText().toString());

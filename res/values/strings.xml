@@ -15,5 +15,9 @@
     <string name="possible_run">Possible Run</string>
     <string name="button_rerack">RERACK</string>
     <string name="button_updateScore">UPDATE SCORE</string>
+    <string name="balls_on_table">"Aantal ballen op tafel: "</string>
+    <string name="foul">FOUL</string>
+    <string name="annuleren">Annuleren</string>
+    <string name="ok">OK</string>
 
 </resources>

@@ -1,6 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/LinearLayout1"
+    android:id="@+id/gameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0099cc"
@@ -34,7 +34,9 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" 
-        android:id="@+id/scoretables">
+        android:id="@+id/scoretables"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
 
         <!-- fragment
             android:id="@+id/scoretablePLayer1"
@@ -68,7 +70,8 @@
             android:text="@string/button_rerack"
             android:textColor="@color/black_overlay"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold" 
+            android:onClick="onClickRerack"/>
 
         <TextView
             android:id="@+id/textView_PossibleRunText"
@@ -83,7 +86,6 @@
             android:id="@+id/textView_PossibleRun"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="15"
             android:textAppearance="?android:attr/textAppearanceLarge" 
             android:textColor="#33b5e5"
 	        android:textSize="30sp"
@@ -99,6 +101,7 @@
         android:layout_marginBottom="0dp"
         android:textColor="#33b5e5"
         android:textSize="30sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:onClick="onClickUpdateScore"/>
 
 </LinearLayout>

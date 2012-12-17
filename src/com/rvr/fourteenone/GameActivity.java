@@ -13,7 +13,6 @@ import android.view.View.OnClickListener;
 
 import com.rvr.fourteenone.UpdateScoreDialogFragment.UpdateScoreDialogListener;
 import com.rvr.fourteenone.model.GameInfo;
-import com.rvr.fourteenone.model.ScoreUpdate;
 
 public class GameActivity extends FragmentActivity implements UpdateScoreDialogListener {
 	private TextView textview_target = null;

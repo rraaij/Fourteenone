@@ -11,10 +11,9 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 import android.view.View.OnClickListener;
 
-import com.rvr.fourteenone.UpdateScoreDialogFragment.UpdateScoreDialogListener;
 import com.rvr.fourteenone.model.GameInfo;
 
-public class GameActivity extends FragmentActivity implements UpdateScoreDialogListener {
+public class GameActivity extends FragmentActivity {
 	private TextView textview_target = null;
 	private TextView textview_possiblerun = null;
 	private GameInfo gameinfo = null;
@@ -40,12 +39,15 @@ public class GameActivity extends FragmentActivity implements UpdateScoreDialogL
 		//initiele waarden vullen
 		playerAtTable = 1;
 		possiblerun = 15;
+		
 		textview_target.setText(Integer.toString(gameinfo.getTarget()));
 		textview_possiblerun.setText(Integer.toString(possiblerun));
 		
 		// scoretabellen voor de spelers aanmaken...
 		scoretable_player1 = new ScoretableP1Fragment();
 		scoretable_player2 = new ScoretableP2Fragment();
+		
+		//scoretable_player1.setPlayerAtTable(true);
 
 		// ... en toevoegen aan de layout
 		getSupportFragmentManager().beginTransaction()
@@ -61,15 +63,7 @@ public class GameActivity extends FragmentActivity implements UpdateScoreDialogL
 	}
 	
 	
-    @Override
-    public void onFinishUpdateScoreDialog(int ballsontable, boolean foul) {
-        Toast.makeText(this, "ballsontable: " + ballsontable + ", foul: " + foul, Toast.LENGTH_SHORT).show();
-    }
-	
-	
 	public void onClickUpdateScore(View view) {
-		
-		//scoreupdate = new ScoreUpdate(0, false);
 		
 		//set up dialog
         final Dialog dialog = new Dialog(GameActivity.this);

@@ -2,6 +2,7 @@ package com.rvr.fourteenone;
 
 import com.rvr.fourteenone.model.GameInfo;
 
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -34,7 +35,7 @@ public class ScoretableP1Fragment extends Fragment {
         GameInfo gameinfo = bundle.getParcelable("com.rvr.fourteenone.model.GameInfo");
                 
         table = (TableLayout) getActivity().findViewById(R.id.tableLayout_player1);
-        
+
         table.setStretchAllColumns(true);  
         table.setShrinkAllColumns(true);  
         TableRow playername = new TableRow(getActivity());  
@@ -102,6 +103,14 @@ public class ScoretableP1Fragment extends Fragment {
 			iScore += vRun - vFoul;
 			
 			table.addView(createTableRow(Integer.toString(iNr), Integer.toString(vRun), Integer.toString(vFoul), Integer.toString(iScore)));
+		}
+	}
+	
+	public void setPlayerAtTable(boolean active) {
+		if (active) {
+			table.setBackgroundColor(Color.WHITE);
+		} else {
+			table.setBackgroundColor(Color.parseColor("#33b5e5"));			
 		}
 	}
 }

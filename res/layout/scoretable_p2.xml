@@ -7,15 +7,5 @@
     android:background="#fff"
     android:id="@+id/tableLayout_player2"
     >
-
-    <TextView
-        android:id="@+id/textView_player2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
-        android:textSize="20sp"
-        android:textColor="#545454"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        />
     
 </TableLayout>

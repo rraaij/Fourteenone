@@ -80,7 +80,7 @@ public class GameActivity extends FragmentActivity implements UpdateScoreDialogL
 
         //set up numberpicker
         NumberPicker ballsontable = (NumberPicker) dialog.findViewById(R.id.numberPicker_ballsontable);
-        ballsontable.setMaxValue(15);
+        ballsontable.setMaxValue(possiblerun>15?15:possiblerun);
         ballsontable.setMinValue(1);
         
         //set up foul button
@@ -110,14 +110,20 @@ public class GameActivity extends FragmentActivity implements UpdateScoreDialogL
 				
 				switch (playerAtTable) {
 					case 1:
-						int pickervalue = Math.abs(picker.getValue());
-						int value = possiblerun - Math.abs(picker.getValue());
 						scoretable_player1.addRow(possiblerun - Math.abs(picker.getValue()), foul?1:0);
 						possiblerun = Math.abs(picker.getValue());
 						textview_possiblerun.setText(String.valueOf(possiblerun));
+						playerAtTable = 2;
+						scoretable_player1.setPlayerAtTable(false);
+						scoretable_player2.setPlayerAtTable(true);
 						break;
 					case 2:
-//						scoretable_player2.addRow(possiblerun - picker.getValue(), foul?1:0);
+						scoretable_player2.addRow(possiblerun - Math.abs(picker.getValue()), foul?1:0);
+						possiblerun = Math.abs(picker.getValue());
+						textview_possiblerun.setText(String.valueOf(possiblerun));
+						playerAtTable = 1;
+						scoretable_player1.setPlayerAtTable(true);
+						scoretable_player2.setPlayerAtTable(false);
 						break;
 					default:
 						break;

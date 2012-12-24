@@ -1,5 +1,6 @@
 package com.rvr.fourteenone;
 
+import android.widget.*;
 import com.rvr.fourteenone.model.GameInfo;
 
 import android.graphics.Color;
@@ -11,10 +12,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class ScoreTable extends Fragment {
 	
@@ -24,37 +21,34 @@ public class ScoreTable extends Fragment {
 		return inflater.inflate(layout, container, false);		
 	}
 	
-	public TableLayout onStart(TableLayout table, int layout, int player) {
+	public LinearLayout onStart(LinearLayout linearlayout, int layout, int player) {
         super.onStart();
         
         Bundle bundle = getActivity().getIntent().getExtras();
         gameinfo = bundle.getParcelable("com.rvr.fourteenone.model.GameInfo");
-                
-        table = (TableLayout) getActivity().findViewById(layout);
-        
-        table.setStretchAllColumns(true);  
-        table.setShrinkAllColumns(true);  
-        TableRow playername = new TableRow(getActivity());  
-        playername.setGravity(Gravity.CENTER_HORIZONTAL);
+
+        linearlayout = (LinearLayout) getActivity().findViewById(layout);
+
+        TableLayout scoretable = (TableLayout) linearlayout.findViewById(R.id.scoretable);
+
+        scoretable.setStretchAllColumns(true);
+        scoretable.setShrinkAllColumns(true);
 
         // title column/row  
-        TextView name = new TextView(getActivity());  
+        TextView name = (TextView) linearlayout.findViewById(R.id.playername);
         name.setWidth(160);
-        if(player == 1) {
-        	name.setText(gameinfo.getPlayer1());
-        } else {
-        	name.setText(gameinfo.getPlayer2());  
-        }
-        name.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);  
-        name.setGravity(Gravity.CENTER);  
-        name.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);  
-        playername.addView(name);  
-        
-        TableRow header = createTableRow("#", "Run", "Foul", "Score");
-        
-        table.addView(playername);
-        table.addView(header);
-        return table;
+        name.setText(player == 1?gameinfo.getPlayer1():gameinfo.getPlayer2());
+        name.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
+
+        scoretable.addView(createTableRow("#", "Run", "Foul", "Score"));
+
+        // totalscore column/row
+        TextView totalscore = (TextView) linearlayout.findViewById(R.id.totalscore);
+        totalscore.setText("0");
+        totalscore.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 38);
+        totalscore.setShadowLayer(2f, 2f, 2f, 0xFF000000);
+
+        return linearlayout;
 	}
 	
 	private TableRow createTableRow(String vNr, String vRun, String vFoul, String vScore) {
@@ -87,15 +81,18 @@ public class ScoreTable extends Fragment {
         return row;
 	}
 
-	public void addRow(TableLayout table, int turn, int vRun, int vFoul) {
+	public void addRow(LinearLayout linearlayout, int turn, int vRun, int vFoul) {
 		int iScore;
-		// get last score
-		if (table.getChildCount() == 2 && turn == 0) {
+
+        TableLayout scoretable = (TableLayout) linearlayout.findViewById(R.id.scoretable);
+
+        // get last score
+		if (scoretable.getChildCount() == 1 && turn == 0) {
 			// it's the first score to be entered
 			iScore = vRun-vFoul;
-			table.addView(createTableRow(Integer.toString(turn+1), Integer.toString(vRun), Integer.toString(vFoul), Integer.toString(iScore)));
+            scoretable.addView(createTableRow(Integer.toString(turn+1), Integer.toString(vRun), Integer.toString(vFoul), Integer.toString(iScore)));
 		} else {
-			TableRow child = (TableRow) table.getChildAt(table.getChildCount()-1);
+			TableRow child = (TableRow) scoretable.getChildAt(scoretable.getChildCount()-1);
 			int iNr = Integer.parseInt((String) ((TextView) child.getChildAt(0)).getText());
 			iNr++;
 
@@ -104,19 +101,35 @@ public class ScoreTable extends Fragment {
 
 			iScore = Integer.parseInt((String) ((TextView) child.getChildAt(3)).getText());
 			iScore += vRun - vFoul;
-			
-			table.addView(createTableRow(Integer.toString(iNr), Integer.toString(vRun), Integer.toString(vFoul), Integer.toString(iScore)));
+
+            scoretable.addView(createTableRow(Integer.toString(iNr), Integer.toString(vRun), Integer.toString(vFoul), Integer.toString(iScore)));
 		}
+
+        // totalscore column/row
+        TextView totalscore = (TextView) linearlayout.findViewById(R.id.totalscore);
+        totalscore.setText(Integer.toString(iScore));
+
 		if (iScore >= gameinfo.getTarget()) {
 			Toast.makeText(getActivity(), "END OF GAME", Toast.LENGTH_LONG).show();
 		}
 	}
 	
-	public void setPlayerAtTable(TableLayout table, boolean active) {
-		if (active) {
-			table.setBackgroundColor(Color.WHITE);
+	public void setPlayerAtTable(LinearLayout linearlayout, boolean active) {
+
+        ScrollView scrollview = (ScrollView) linearlayout.findViewById(R.id.scrollview);
+        TableLayout scoretable = (TableLayout) linearlayout.findViewById(R.id.scoretable);
+        TextView name = (TextView) linearlayout.findViewById(R.id.playername);
+
+        if (active) {
+            scrollview.setBackgroundColor(Color.WHITE);
+            scoretable.setBackgroundColor(Color.WHITE);
+            name.setTextColor(Color.WHITE);
+            name.setShadowLayer(2f, 2f, 2f, 0xFF000000);
 		} else {
-			table.setBackgroundColor(Color.parseColor("#33b5e5"));			
-		}
+            scrollview.setBackgroundColor(Color.parseColor("#33b5e5"));
+            scoretable.setBackgroundColor(Color.parseColor("#33b5e5"));
+            name.setTextColor(Color.parseColor("#33b5e5"));
+            name.setShadowLayer(0,0,0,0);
+        }
 	}
 }

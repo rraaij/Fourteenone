@@ -4,13 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TableLayout;
+import android.widget.LinearLayout;
 
 public class ScoretableP2Fragment extends ScoreTable {
 	
 	public static int PLAYERNUMBER = 2;
 	
-	private TableLayout table;
+	private LinearLayout table;
 	private int turn = 0;
 	
 	@Override
@@ -20,7 +20,7 @@ public class ScoretableP2Fragment extends ScoreTable {
 
 	@Override
     public void onStart() {
-        table = super.onStart(table, R.id.tableLayout_player2, PLAYERNUMBER);
+        table = super.onStart(table, R.id.linearLayout_player2, PLAYERNUMBER);
 	}
 
 	public void addRow(int vRun, int vFoul) {

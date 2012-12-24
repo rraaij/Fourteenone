@@ -46,8 +46,6 @@ public class GameActivity extends FragmentActivity {
 		// scoretabellen voor de spelers aanmaken...
 		scoretable_player1 = new ScoretableP1Fragment();
 		scoretable_player2 = new ScoretableP2Fragment();
-		
-		//scoretable_player1.setPlayerAtTable(true);
 
 		// ... en toevoegen aan de layout
 		getSupportFragmentManager().beginTransaction()
@@ -68,7 +66,7 @@ public class GameActivity extends FragmentActivity {
 		//set up dialog
         final Dialog dialog = new Dialog(GameActivity.this);
         dialog.setContentView(R.layout.updatescore);
-        dialog.setTitle("Update Score voor " + gameinfo.getPlayer1());
+        dialog.setTitle("Update Score voor " + (playerAtTable == 1?gameinfo.getPlayer1():gameinfo.getPlayer2()));
         dialog.setCancelable(true);
 
         //set up numberpicker
@@ -93,40 +91,38 @@ public class GameActivity extends FragmentActivity {
 			}
 		});
         
-        
         Button button_ok = (Button) dialog.findViewById(R.id.button_ok);
         button_ok.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				NumberPicker picker = (NumberPicker) dialog.findViewById(R.id.numberPicker_ballsontable);
-				//scoreupdate.setBallsontable(picker.getValue());
-				
+
 				switch (playerAtTable) {
 					case 1:
 						scoretable_player1.addRow(possiblerun - Math.abs(picker.getValue()), foul?1:0);
-						possiblerun = Math.abs(picker.getValue());
-						textview_possiblerun.setText(String.valueOf(possiblerun));
+
 						playerAtTable = 2;
 						scoretable_player1.setPlayerAtTable(false);
 						scoretable_player2.setPlayerAtTable(true);
 						break;
 					case 2:
 						scoretable_player2.addRow(possiblerun - Math.abs(picker.getValue()), foul?1:0);
-						possiblerun = Math.abs(picker.getValue());
-						textview_possiblerun.setText(String.valueOf(possiblerun));
-						playerAtTable = 1;
+
+                        playerAtTable = 1;
 						scoretable_player1.setPlayerAtTable(true);
 						scoretable_player2.setPlayerAtTable(false);
 						break;
 					default:
 						break;
 				}
-				
+                possiblerun = Math.abs(picker.getValue());
+                textview_possiblerun.setText(String.valueOf(possiblerun));
+                foul = false;
+
 				dialog.dismiss();
 			}
 		});
-        
-        //now that the dialog is set up, it's time to show it    
+
         dialog.show();
 		
 	}

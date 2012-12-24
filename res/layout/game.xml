@@ -1,17 +1,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/gameLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#0099cc"
-    android:gravity="center_vertical"
-    android:orientation="vertical"
-    tools:context=".GameActivity" >
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/gameLayout"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#0099cc"
+              android:gravity="center_vertical"
+              android:orientation="vertical"
+              tools:context=".GameActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal" >
+        android:gravity="center_horizontal">
 
         <TextView
             android:id="@+id/textView_targetText"
@@ -19,7 +19,9 @@
             android:layout_height="wrap_content"
             android:text="@string/game_target"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_marginRight="5dp" />
+            android:layout_marginRight="5dp"
+            android:password="false"
+            android:phoneNumber="false"/>
 
         <TextView
             android:id="@+id/textView_targetScore"
@@ -28,40 +30,23 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#33b5e5"
             android:textSize="30sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" 
+        android:layout_height="wrap_content"
         android:id="@+id/scoretables"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp">
-
-        <!-- fragment
-            android:id="@+id/scoretablePLayer1"
-            android:name="com.rvr.fourteenone.ScoretableFragment"
-            android:layout_width="150dp"
-            android:layout_height="250dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            tools:layout="@layout/scoretable" />
-
-        <fragment
-            android:id="@+id/scoretablePLayer2"
-            android:name="com.rvr.fourteenone.ScoretableFragment"
-            android:layout_width="150dp"
-            android:layout_height="250dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            tools:layout="@layout/scoretable" /-->
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical" >
+        android:layout_marginTop="15dp"
+        android:gravity="center_vertical">
 
         <Button
             android:id="@+id/button_Rerack"
@@ -70,7 +55,7 @@
             android:text="@string/button_rerack"
             android:textColor="@color/black_overlay"
             android:textSize="20sp"
-            android:textStyle="bold" 
+            android:textStyle="bold"
             android:onClick="onClickRerack"/>
 
         <TextView
@@ -78,7 +63,7 @@
             android:layout_width="75dp"
             android:layout_height="wrap_content"
             android:text="@string/possible_run"
-            android:textAppearance="?android:attr/textAppearanceMedium" 
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="5dp"/>
 
@@ -86,16 +71,16 @@
             android:id="@+id/textView_PossibleRun"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge" 
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#33b5e5"
-	        android:textSize="30sp"
-    	    android:textStyle="bold"/>
+            android:textSize="30sp"
+            android:textStyle="bold"/>
 
     </LinearLayout>
 
     <Button
         android:id="@+id/button_UpdateScore"
-        android:text="@string/button_updateScore" 
+        android:text="@string/button_updateScore"
         android:layout_width="fill_parent"
         android:layout_height="60dp"
         android:layout_marginBottom="0dp"

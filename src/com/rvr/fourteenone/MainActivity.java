@@ -11,6 +11,8 @@ import android.widget.EditText;
 
 public class MainActivity extends Activity {
 
+    private GameInfo gameinfo;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -18,33 +20,45 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.main);
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
-	
 	public void onClickStartGame(View view) {
 		
 		EditText txt_player1 = (EditText) findViewById(R.id.editText_pl1name);
 		EditText txt_player2 = (EditText) findViewById(R.id.editText_pl2name);
-		EditText txt_target = (EditText) findViewById(R.id.editText_target);
-		
+
 		/* STUB DATA */
 		txt_player1.setText("Shane");
 		txt_player2.setText("Earl");
-		txt_target.setText("100");
-		
-		GameInfo gameinfo = new GameInfo();
-		gameinfo.setPlayer1(txt_player1.getText().toString());
-		gameinfo.setPlayer2(txt_player2.getText().toString());
-		gameinfo.setTarget(Integer.parseInt(txt_target.getText().toString()));
-		
-		Intent gameIntent = new Intent("com.rvr.fourteenone.GameActivity");
-		gameIntent.putExtra("com.rvr.fourteenone.model.GameInfo", gameinfo);
-		
-		startActivity(gameIntent);
+		((EditText) findViewById(R.id.editText_target)).setText("100");
+
+        gameinfo = new GameInfo();
+        gameinfo.setTarget(Integer.parseInt(((EditText) findViewById(R.id.editText_target)).getText().toString()));
+
+        // Select the player who starts the game
+        SelectPlayerDialogFragment selectPlayer = SelectPlayerDialogFragment.newInstance(
+                "Select the player who starts the game",
+                txt_player1.getText().toString(),
+                txt_player2.getText().toString());
+        selectPlayer.show(getFragmentManager(), "dialog");
 	}
 
+    public void doPlayer1Click() {
+        gameinfo.setPlayer1(((EditText) findViewById(R.id.editText_pl1name)).getText().toString());
+        gameinfo.setPlayer2(((EditText) findViewById(R.id.editText_pl2name)).getText().toString());
+
+        startGame();
+    }
+
+    public void doPlayer2Click() {
+        gameinfo.setPlayer1(((EditText) findViewById(R.id.editText_pl2name)).getText().toString());
+        gameinfo.setPlayer2(((EditText) findViewById(R.id.editText_pl1name)).getText().toString());
+
+        startGame();
+    }
+
+    private void startGame() {
+        Intent gameIntent = new Intent("com.rvr.fourteenone.GameActivity");
+        gameIntent.putExtra("com.rvr.fourteenone.model.GameInfo", gameinfo);
+
+        startActivity(gameIntent);
+    }
 }

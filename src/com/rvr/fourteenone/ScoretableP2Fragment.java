@@ -21,6 +21,9 @@ public class ScoretableP2Fragment extends ScoreTable {
 	@Override
     public void onStart() {
         table = super.onStart(table, R.id.linearLayout_player2, PLAYERNUMBER);
+
+        //initieel is player1 aan tafel
+        setPlayerAtTable(false);
 	}
 
 	public void addRow(int vRun, int vFoul) {

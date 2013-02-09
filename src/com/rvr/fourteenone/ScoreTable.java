@@ -1,5 +1,7 @@
 package com.rvr.fourteenone;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.widget.*;
 import com.rvr.fourteenone.model.GameInfo;
 
@@ -40,7 +42,10 @@ public class ScoreTable extends Fragment {
         name.setText(player == 1?gameinfo.getPlayer1():gameinfo.getPlayer2());
         name.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
 
-        scoretable.addView(createTableRow("#", "Run", "Foul", "Score"));
+
+        if (scoretable.getChildCount() == 0) {
+            scoretable.addView(createTableRow("#", "Run", "Foul", "Score"));
+        }
 
         // totalscore column/row
         TextView totalscore = (TextView) linearlayout.findViewById(R.id.totalscore);
@@ -110,8 +115,9 @@ public class ScoreTable extends Fragment {
         totalscore.setText(Integer.toString(iScore));
 
 		if (iScore >= gameinfo.getTarget()) {
-			Toast.makeText(getActivity(), "END OF GAME", Toast.LENGTH_LONG).show();
-		}
+            // Winnaar is bekend!
+            ((GameActivity)getActivity()).onEndOfGame();
+        }
 	}
 	
 	public void setPlayerAtTable(LinearLayout linearlayout, boolean active) {

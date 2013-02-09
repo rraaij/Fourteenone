@@ -4,11 +4,15 @@
     <string name="app_name">Fourteenone</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
+    <string name="menu_scorecorrection">Score Correction</string>
+    <string name="menu_quitgame">Quit Game</string>
     <string name="start_game">Start Game</string>
     <string name="player_1_name">First player\'s name:</string>
     <string name="player_2_name">Second player\'s name:</string>
     <string name="game_target">Game Target:</string>
-    <string name="introtext">Please enter the player names and the target you\'re going for, and then start your game! Have fun!</string>
+    <string name="introtext">Please enter the player names and the target you\'re going for, and then start your game!
+        Have fun!
+    </string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="gameActivity">Game</string>

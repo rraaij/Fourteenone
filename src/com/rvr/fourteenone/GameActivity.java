@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebIconDatabase;
 import android.widget.*;
 import android.view.View.OnClickListener;
 
@@ -155,6 +156,9 @@ public class GameActivity extends FragmentActivity {
             case R.id.menu_scorecorrection:
                 onClickScoreCorrection();
                 return true;
+            case R.id.menu_undolastscore:
+                onClickUndoLastScore();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -163,6 +167,7 @@ public class GameActivity extends FragmentActivity {
     public void onClickRerack(View view) {
 		possiblerun = 14 + Integer.parseInt(textview_possiblerun.getText().toString());
 		textview_possiblerun.setText(String.valueOf(possiblerun));
+        gameinfo.setLastAction(GameInfo.LAST_ACTION_RERACK);
 	}
 
     public void onEndOfGame() {
@@ -172,6 +177,17 @@ public class GameActivity extends FragmentActivity {
         endofgame.setVisibility(1);
         endofgame.setShadowLayer(2f, 2f, 2f, Color.WHITE);
         endofgame.setText("Game winner!");
+
+        Button startnewgame = ((Button) findViewById(R.id.button_startnewgame));
+        startnewgame.setVisibility(1);
+        final Intent i = new Intent(this, MainActivity.class);
+        startnewgame.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+            }
+        });
     }
 	
 	public void onClickUpdateScore(View view) {
@@ -179,13 +195,13 @@ public class GameActivity extends FragmentActivity {
 		//set up dialog
         final Dialog dialog = new Dialog(GameActivity.this);
         dialog.setContentView(R.layout.updatescore);
-        dialog.setTitle("Update Score voor " + (playerAtTable == 1?gameinfo.getPlayer1():gameinfo.getPlayer2()));
+        dialog.setTitle("Update score for player " + (playerAtTable == 1?gameinfo.getPlayer1():gameinfo.getPlayer2()));
         dialog.setCancelable(true);
 
         //set up numberpicker
         NumberPicker ballsontable = (NumberPicker) dialog.findViewById(R.id.numberPicker_ballsontable);
         ballsontable.setMaxValue(possiblerun>15?15:possiblerun);
-        ballsontable.setMinValue(1);
+        ballsontable.setMinValue(2);
         
         //set up foul button
         final ToggleButton button_foul = (ToggleButton) dialog.findViewById(R.id.button_foul);
@@ -213,6 +229,7 @@ public class GameActivity extends FragmentActivity {
 				switch (playerAtTable) {
 					case 1:
 						scoretable_player1.addRow(possiblerun - Math.abs(picker.getValue()), foul?1:0);
+                        gameinfo.setLastAction(GameInfo.LAST_ACTION_SCORE_PLAYER_1);
 
 						playerAtTable = 2;
 						scoretable_player1.setPlayerAtTable(false);
@@ -220,6 +237,7 @@ public class GameActivity extends FragmentActivity {
 						break;
 					case 2:
 						scoretable_player2.addRow(possiblerun - Math.abs(picker.getValue()), foul?1:0);
+                        gameinfo.setLastAction(GameInfo.LAST_ACTION_SCORE_PLAYER_2);
 
                         playerAtTable = 1;
 						scoretable_player1.setPlayerAtTable(true);
@@ -311,8 +329,10 @@ public class GameActivity extends FragmentActivity {
 
                     if (radio_p1.isChecked()) {
                         scoretable_player1.addRow(correction, 0);
+                        gameinfo.setLastAction(GameInfo.LAST_ACTION_SCORE_PLAYER_1);
                     } else {
                         scoretable_player2.addRow(correction, 0);
+                        gameinfo.setLastAction(GameInfo.LAST_ACTION_SCORE_PLAYER_2);
                     }
 
                     dialog.dismiss();
@@ -320,6 +340,62 @@ public class GameActivity extends FragmentActivity {
             }
         });
         dialog.show();
+    }
+
+
+    /* 1. de laatste regel in een van de twee tabellen;
+     * 2. een scorecorrectie in een van de twee tabellen;
+     * 3. een onterechte rerack */
+    public void onClickUndoLastScore() {
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        //Yes button clicked
+                        int score;
+                        switch (gameinfo.getLastAction()) {
+                            case GameInfo.LAST_ACTION_NONE:
+                                break;
+                            case GameInfo.LAST_ACTION_SCORE_PLAYER_1:
+                                score = scoretable_player1.removeLastRow();
+                                possiblerun = score + Integer.parseInt(textview_possiblerun.getText().toString());
+                                textview_possiblerun.setText(String.valueOf(possiblerun));
+
+                                playerAtTable = 1;
+                                scoretable_player1.setPlayerAtTable(true);
+                                scoretable_player2.setPlayerAtTable(false);
+                                break;
+                            case GameInfo.LAST_ACTION_SCORE_PLAYER_2:
+                                score = scoretable_player2.removeLastRow();
+                                possiblerun = score + Integer.parseInt(textview_possiblerun.getText().toString());
+                                textview_possiblerun.setText(String.valueOf(possiblerun));
+
+                                playerAtTable = 2;
+                                scoretable_player2.setPlayerAtTable(true);
+                                scoretable_player1.setPlayerAtTable(false);
+                                break;
+                            case GameInfo.LAST_ACTION_RERACK:
+                                possiblerun = Integer.parseInt(textview_possiblerun.getText().toString()) - 14;
+                                textview_possiblerun.setText(String.valueOf(possiblerun));
+                                break;
+                        }
+                        gameinfo.setLastAction(GameInfo.LAST_ACTION_NONE);
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        //No button clicked
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Undo Last Score")
+               .setMessage("The last score entry will be deleted. Are you sure?")
+               .setPositiveButton("Yes", dialogClickListener)
+               .setNegativeButton("No", dialogClickListener)
+               .show();
     }
 
 }

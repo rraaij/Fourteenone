@@ -115,7 +115,7 @@ public class ScoreTable extends Fragment {
         return row;
 	}
 
-	public void addRow(LinearLayout linearlayout, int turn, int vRun, int vFoul) {
+	protected void addRow(LinearLayout linearlayout, int turn, int vRun, int vFoul) {
 		int iScore;
 
         TableLayout scoretable = (TableLayout) linearlayout.findViewById(R.id.scoretable);
@@ -148,8 +148,34 @@ public class ScoreTable extends Fragment {
             ((GameActivity)getActivity()).onEndOfGame();
         }
 	}
+
+    protected int removeLastRow(LinearLayout linearlayout) {
+        TableLayout scoretable = (TableLayout) linearlayout.findViewById(R.id.scoretable);
+
+        int score = 0;
+
+        // get last score
+        if (scoretable.getChildCount() > 1) {
+            // terug te geven score teruggeven, om op te tellen bij de possible run.
+            TableRow child = (TableRow) scoretable.getChildAt(scoretable.getChildCount()-1);
+            score = Integer.parseInt((String) ((TextView) child.getChildAt(1)).getText());
+
+            // regel verwijderen uit tabel
+            scoretable.removeViewAt(scoretable.getChildCount()-1);
+
+            TextView totalscore = (TextView) linearlayout.findViewById(R.id.totalscore);
+            child = (TableRow) scoretable.getChildAt(scoretable.getChildCount()-1);
+            if (scoretable.getChildCount() > 1) {
+                int iScore = Integer.parseInt((String) ((TextView) child.getChildAt(3)).getText());
+                totalscore.setText(Integer.toString(iScore));
+            } else {
+                totalscore.setText("0");
+            }
+        }
+        return score;
+    }
 	
-	public void setPlayerAtTable(LinearLayout linearlayout, boolean active) {
+	protected void setPlayerAtTable(LinearLayout linearlayout, boolean active) {
 
         ScrollView scrollview = (ScrollView) linearlayout.findViewById(R.id.scrollview);
         TableLayout scoretable = (TableLayout) linearlayout.findViewById(R.id.scoretable);

@@ -4,16 +4,24 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class GameInfo implements Parcelable {
-	
+
+    public static final int LAST_ACTION_NONE = 0;
+    public static final int LAST_ACTION_SCORE_PLAYER_1 = 1;
+    public static final int LAST_ACTION_SCORE_PLAYER_2 = 2;
+    public static final int LAST_ACTION_RERACK = 3;
+
 	private String player1;
 	private String player2;
 	private int target;
+    private int lastAction;
 
 	/**
 	 * Standard basic constructor for non-parcel
 	 * object creation
 	 */
-	public GameInfo() { ; };
+	public GameInfo() {
+       setLastAction(0);
+    }
  
 	/**
 	 *
@@ -23,7 +31,8 @@ public class GameInfo implements Parcelable {
 	 * @param in a parcel from which to read this object
 	 */
 	public GameInfo(Parcel in) {
-		readFromParcel(in);
+        setLastAction(0);
+        readFromParcel(in);
 	}
 	
 	@Override
@@ -107,7 +116,14 @@ public class GameInfo implements Parcelable {
 	public void setTarget(int target) {
 		this.target = target;
 	}
-	
-	
+
+    public int getLastAction() {
+        return lastAction;
+    }
+
+    public void setLastAction(int lastAction) {
+        this.lastAction = lastAction;
+    }
+
 
 }

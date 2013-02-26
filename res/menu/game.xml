@@ -7,15 +7,22 @@
         android:title="@string/menu_settings"/-->
 
     <item
-        android:id="@+id/menu_scorecorrection"
+        android:id="@+id/menu_undolastscore"
         android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/menu_undolastscore"
+        />
+
+    <item
+        android:id="@+id/menu_scorecorrection"
+        android:orderInCategory="110"
         android:showAsAction="never"
         android:title="@string/menu_scorecorrection"
         />
 
     <item
         android:id="@+id/menu_quitgame"
-        android:orderInCategory="110"
+        android:orderInCategory="120"
         android:showAsAction="never"
         android:title="@string/menu_quitgame"
         />

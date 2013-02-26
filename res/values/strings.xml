@@ -4,6 +4,7 @@
     <string name="app_name">Fourteenone</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
+    <string name="menu_undolastscore">Undo last score</string>
     <string name="menu_scorecorrection">Score Correction</string>
     <string name="menu_quitgame">Quit Game</string>
     <string name="start_game">Start Game</string>
@@ -13,8 +14,6 @@
     <string name="introtext">Please enter the player names and the target you\'re going for, and then start your game!
         Have fun!
     </string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="dummy_button">Dummy Button</string>
     <string name="gameActivity">Game</string>
     <string name="possible_run">Possible Run</string>
     <string name="button_rerack">RERACK</string>
@@ -23,5 +22,6 @@
     <string name="foul">FOUL</string>
     <string name="annuleren">Annuleren</string>
     <string name="ok">OK</string>
+    <string name="startnewgame">Start new game</string>
 
 </resources>

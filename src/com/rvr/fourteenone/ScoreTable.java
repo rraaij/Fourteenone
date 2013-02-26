@@ -2,6 +2,7 @@ package com.rvr.fourteenone;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.widget.*;
 import com.rvr.fourteenone.model.GameInfo;
 
@@ -25,7 +26,9 @@ public class ScoreTable extends Fragment {
 	
 	public LinearLayout onStart(LinearLayout linearlayout, int layout, int player) {
         super.onStart();
-        
+
+        Log.e("ScoreTable", "[ScoreTable] onStart");
+
         Bundle bundle = getActivity().getIntent().getExtras();
         gameinfo = bundle.getParcelable("com.rvr.fourteenone.model.GameInfo");
 
@@ -42,21 +45,47 @@ public class ScoreTable extends Fragment {
         name.setText(player == 1?gameinfo.getPlayer1():gameinfo.getPlayer2());
         name.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
 
-
-        if (scoretable.getChildCount() == 0) {
-            scoretable.addView(createTableRow("#", "Run", "Foul", "Score"));
-        }
-
         // totalscore column/row
         TextView totalscore = (TextView) linearlayout.findViewById(R.id.totalscore);
-        totalscore.setText("0");
         totalscore.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 38);
         totalscore.setShadowLayer(2f, 2f, 2f, 0xFF000000);
 
+        // bij allereerste schermopbouw...
+        if (scoretable.getChildCount() == 0) {
+            scoretable.addView(createTableRow("#", "Run", "Foul", "Score"));
+            totalscore.setText("0");
+        } else if (scoretable.getChildCount() > 1) {
+            // bij terugkomst nadat scherm uitgezet was
+            TableRow child = (TableRow) scoretable.getChildAt(scoretable.getChildCount()-1);
+            int iScore = Integer.parseInt((String) ((TextView) child.getChildAt(3)).getText());
+            totalscore.setText(Integer.toString(iScore));
+        }
+
         return linearlayout;
 	}
-	
-	private TableRow createTableRow(String vNr, String vRun, String vFoul, String vScore) {
+
+    /* Called when activity is no longer visible to user (telefoon gaat uit, wordt uitgezet, een andere activity wordt actief */
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.e("ScoreTable", "[ScoreTable] onStop");
+    }
+
+    /* this activity is being paused, previous activity is being resumed */
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.e("ScoreTable", "[ScoreTable] onPause");
+    }
+
+    /* called when activity starts interacting with user */
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e("ScoreTable", "[ScoreTable] onResume");
+    }
+
+    private TableRow createTableRow(String vNr, String vRun, String vFoul, String vScore) {
 		TableRow row = new TableRow(getActivity());
         TextView nr = new TextView(getActivity());
         nr.setText(vNr);

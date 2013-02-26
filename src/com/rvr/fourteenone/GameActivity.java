@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,7 +32,10 @@ public class GameActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.game);
+        Log.e("GameActivity", "[GameActivity] onCreate");
+
+
+        setContentView(R.layout.game);
 
         Bundle bundle = getIntent().getExtras();
         gameinfo = bundle.getParcelable("com.rvr.fourteenone.model.GameInfo");
@@ -61,6 +65,50 @@ public class GameActivity extends FragmentActivity {
 			.commit();
 
 	}
+
+    /* Called when activity is no longer visible to user (telefoon gaat uit, wordt uitgezet, een andere activity wordt actief */
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e("GameActivity", "[GameActivity] onStop");
+    }
+
+    /* Called when activity becomes visible to user */
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.e("GameActivity", "[GameActivity] onStart");
+
+        if (playerAtTable == 1) {
+            scoretable_player1.setPlayerAtTable(true);
+            scoretable_player2.setPlayerAtTable(false);
+        } else {
+            scoretable_player1.setPlayerAtTable(false);
+            scoretable_player2.setPlayerAtTable(true);
+        }
+    }
+
+    /* this activity is being paused, previous activity is being resumed */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.e("GameActivity", "[GameActivity] onPause");
+    }
+
+    /* Called when activity has been stopped (onStop() ) and is restarting again */
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.e("GameActivity", "[GameActivity] onRestart");
+    }
+
+    /* called when activity starts interacting with user */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e("GameActivity", "[GameActivity] onResume");
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

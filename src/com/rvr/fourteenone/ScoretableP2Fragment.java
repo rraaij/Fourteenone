@@ -1,6 +1,7 @@
 package com.rvr.fourteenone;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +21,12 @@ public class ScoretableP2Fragment extends ScoreTable {
 
 	@Override
     public void onStart() {
+        Log.e("ScoreTableP2Fragment", "[ScoreTableP2Fragment] onStart");
+
         table = super.onStart(table, R.id.linearLayout_player2, PLAYERNUMBER);
 
         //initieel is player1 aan tafel
-        setPlayerAtTable(false);
+        //setPlayerAtTable(false);
 	}
 
 	public void addRow(int vRun, int vFoul) {

@@ -17,6 +17,7 @@
     <string name="gameActivity">Game</string>
     <string name="possible_run">Possible Run</string>
     <string name="button_rerack">RERACK</string>
+    <string name="button_noScore">No score</string>
     <string name="button_updateScore">UPDATE SCORE</string>
     <string name="balls_on_table">"Aantal ballen op tafel: "</string>
     <string name="foul">FOUL</string>

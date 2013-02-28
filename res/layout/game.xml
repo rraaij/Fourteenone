@@ -8,7 +8,7 @@
               android:orientation="vertical"
               tools:context=".GameActivity">
 
-    <LinearLayout
+    <!--LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal">
@@ -31,7 +31,7 @@
             android:textColor="#33b5e5"
             android:textSize="30sp"
             android:textStyle="bold"/>
-    </LinearLayout>
+    </LinearLayout-->
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -64,8 +64,9 @@
             android:layout_height="wrap_content"
             android:text="@string/possible_run"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="5dp"/>
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="10dp"
+            android:gravity="right"/>
 
         <TextView
             android:id="@+id/textView_PossibleRun"
@@ -73,38 +74,66 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#33b5e5"
-            android:textSize="30sp"
+            android:textSize="40sp"
             android:textStyle="bold"/>
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button_UpdateScore"
-        android:text="@string/button_updateScore"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="60dp"
-        android:layout_marginBottom="0dp"
-        android:textColor="#33b5e5"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:onClick="onClickUpdateScore"/>
-
-    <TextView
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView_endofgame"
-        android:layout_gravity="center"
-        android:visibility="invisible"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:textColor="#f6ff48"/>
+        android:layout_marginTop="15dp"
+        >
 
-    <Button
-        android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/button_NoScore"
+            android:text="@string/button_noScore"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="0dp"
+            android:textColor="@color/black_overlay"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:onClick="onClickNoScore"/>
+
+        <Button
+            android:id="@+id/button_UpdateScore"
+            android:text="@string/button_updateScore"
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:layout_marginBottom="0dp"
+            android:textColor="#33b5e5"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:onClick="onClickUpdateScore"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/startnewgame"
-        android:id="@+id/button_startnewgame"
-        android:layout_gravity="center_horizontal"
-        android:visibility="invisible"/>
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView_endofgame"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="#f6ff48"/>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/startnewgame"
+            android:id="@+id/button_startnewgame"
+            android:layout_gravity="center_horizontal"
+            android:visibility="invisible"/>
+
+    </LinearLayout>
 
 </LinearLayout>

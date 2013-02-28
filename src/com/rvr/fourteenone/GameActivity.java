@@ -19,7 +19,7 @@ import android.view.View.OnClickListener;
 import com.rvr.fourteenone.model.GameInfo;
 
 public class GameActivity extends FragmentActivity {
-	private TextView textview_target = null;
+	//private TextView textview_target = null;
 	private TextView textview_possiblerun = null;
 	private GameInfo gameinfo = null;
 	private boolean foul = false;
@@ -45,14 +45,14 @@ public class GameActivity extends FragmentActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("Fourteenone - target:" + Integer.toString(gameinfo.getTarget()));
 
-        textview_target = (TextView) findViewById(R.id.textView_targetScore);
+        //textview_target = (TextView) findViewById(R.id.textView_targetScore);
 		textview_possiblerun = (TextView) findViewById(R.id.textView_PossibleRun);
 
 		//initiele waarden vullen
 		playerAtTable = 1;
 		possiblerun = 15;
 		
-		textview_target.setText(Integer.toString(gameinfo.getTarget()));
+//		textview_target.setText(Integer.toString(gameinfo.getTarget()));
 		textview_possiblerun.setText(Integer.toString(possiblerun));
 		
 		// scoretabellen voor de spelers aanmaken...
@@ -122,36 +122,9 @@ public class GameActivity extends FragmentActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home:
+            case android.R.id.home:   // the < in the icon  in taskbar is pressed
             case R.id.menu_quitgame:
-                // Are you sure Y/N
-                final Intent i = new Intent(this, MainActivity.class);
-
-                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which){
-                            case DialogInterface.BUTTON_POSITIVE:
-                                //Yes button clicked
-                                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(i);
-                                break;
-
-                            case DialogInterface.BUTTON_NEGATIVE:
-                                //No button clicked
-                                break;
-                        }
-                    }
-                };
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder
-                    .setTitle("Quit Game")
-                    .setMessage("Are you sure you want to quit this game?")
-                    .setPositiveButton("Yes", dialogClickListener)
-                    .setNegativeButton("No", dialogClickListener)
-                    .show();
-
+                quitGame();
                 return true;
             case R.id.menu_scorecorrection:
                 onClickScoreCorrection();
@@ -164,6 +137,42 @@ public class GameActivity extends FragmentActivity {
         }
     }
 
+    private void quitGame() {
+        // Are you sure Y/N
+        final Intent i = new Intent(this, MainActivity.class);
+
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        //Yes button clicked
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i);
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        //No button clicked
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder
+            .setTitle("Quit Game")
+            .setMessage("Are you sure you want to quit this game?")
+            .setPositiveButton("Yes", dialogClickListener)
+            .setNegativeButton("No", dialogClickListener)
+            .show();
+    }
+
+    /* the back button below the screen is pressed; implementing this method prevents the game from ending.  */
+    public void onBackPressed() {
+        Log.e("GameActivity", "[GameActivity] onBackPressed");
+        quitGame();
+    }
+
     public void onClickRerack(View view) {
 		possiblerun = 14 + Integer.parseInt(textview_possiblerun.getText().toString());
 		textview_possiblerun.setText(String.valueOf(possiblerun));
@@ -172,7 +181,9 @@ public class GameActivity extends FragmentActivity {
 
     public void onEndOfGame() {
         ((Button) findViewById(R.id.button_UpdateScore)).setEnabled(false);
+        ((Button) findViewById(R.id.button_NoScore)).setEnabled(false);
         ((Button) findViewById(R.id.button_Rerack)).setEnabled(false);
+
         TextView endofgame = (TextView) findViewById(R.id.textView_endofgame);
         endofgame.setVisibility(1);
         endofgame.setShadowLayer(2f, 2f, 2f, Color.WHITE);
@@ -188,6 +199,23 @@ public class GameActivity extends FragmentActivity {
                 startActivity(i);
             }
         });
+    }
+
+    public void onClickNoScore(View view) {
+        switch (playerAtTable) {
+            case 1:
+                playerAtTable = 2;
+                scoretable_player1.setPlayerAtTable(false);
+                scoretable_player2.setPlayerAtTable(true);
+                break;
+            case 2:
+                playerAtTable = 1;
+                scoretable_player1.setPlayerAtTable(true);
+                scoretable_player2.setPlayerAtTable(false);
+                break;
+            default:
+                break;
+        }
     }
 	
 	public void onClickUpdateScore(View view) {
@@ -361,19 +389,11 @@ public class GameActivity extends FragmentActivity {
                                 score = scoretable_player1.removeLastRow();
                                 possiblerun = score + Integer.parseInt(textview_possiblerun.getText().toString());
                                 textview_possiblerun.setText(String.valueOf(possiblerun));
-
-                                playerAtTable = 1;
-                                scoretable_player1.setPlayerAtTable(true);
-                                scoretable_player2.setPlayerAtTable(false);
                                 break;
                             case GameInfo.LAST_ACTION_SCORE_PLAYER_2:
                                 score = scoretable_player2.removeLastRow();
                                 possiblerun = score + Integer.parseInt(textview_possiblerun.getText().toString());
                                 textview_possiblerun.setText(String.valueOf(possiblerun));
-
-                                playerAtTable = 2;
-                                scoretable_player2.setPlayerAtTable(true);
-                                scoretable_player1.setPlayerAtTable(false);
                                 break;
                             case GameInfo.LAST_ACTION_RERACK:
                                 possiblerun = Integer.parseInt(textview_possiblerun.getText().toString()) - 14;

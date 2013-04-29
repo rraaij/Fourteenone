@@ -141,13 +141,28 @@ public class ScoreTable extends Fragment {
 
         // totalscore column/row
         TextView totalscore = (TextView) linearlayout.findViewById(R.id.totalscore);
-        totalscore.setText(Integer.toString(iScore));
+        if (totalscore != null) {
+            totalscore.setText(Integer.toString(iScore));
+            totalscore.setTextColor(Color.parseColor("#ffffff")); //wit
+            totalscore.setShadowLayer(2f, 2f, 2f, 0xFF000000);
+            ((TextView) linearlayout.findViewById(R.id.textView_ProvisionalText)).setVisibility(View.INVISIBLE);
+        }
 
-		if (iScore >= gameinfo.getTarget()) {
+        if (iScore >= gameinfo.getTarget()) {
             // Winnaar is bekend!
             ((GameActivity)getActivity()).onEndOfGame();
         }
 	}
+
+    protected void setProvisionalTotalScore(LinearLayout linearlayout, int vRun) {
+        TextView totalscore = (TextView) linearlayout.findViewById(R.id.totalscore);
+        int iScore = Integer.parseInt((String) totalscore.getText()) + vRun - 1;
+        totalscore.setText(Integer.toString(iScore));
+        totalscore.setTextColor(Color.parseColor("#33b5e5")); //
+        totalscore.setShadowLayer(0,0,0,0);
+
+        ((TextView) linearlayout.findViewById(R.id.textView_ProvisionalText)).setVisibility(View.VISIBLE);
+    }
 
     protected int removeLastRow(LinearLayout linearlayout) {
         TableLayout scoretable = (TableLayout) linearlayout.findViewById(R.id.scoretable);

@@ -8,7 +8,7 @@
               android:layout_marginRight="5dp">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/playername"
         android:layout_gravity="center_horizontal"
@@ -33,13 +33,34 @@
 
     </ScrollView>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/totalscore"
-        android:layout_gravity="right"
-        android:textStyle="bold"
-        android:textColor="#ffffff"
-        android:gravity="right"/>
+        android:gravity="right">
+
+        <TextView
+            android:id="@+id/textView_ProvisionalText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/provisional"
+            android:textSize="12sp"
+            android:textColor="#33b5e5"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="right"
+            android:visibility="invisible"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/totalscore"
+            android:layout_gravity="right"
+            android:textStyle="bold"
+            android:textColor="#ffffff"
+            android:gravity="right"/>
+
+    </LinearLayout>
 
 </LinearLayout>

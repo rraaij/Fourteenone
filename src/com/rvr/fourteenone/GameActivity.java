@@ -173,9 +173,30 @@ public class GameActivity extends FragmentActivity {
         quitGame();
     }
 
-    public void onClickRerack(View view) {
-		possiblerun = 14 + Integer.parseInt(textview_possiblerun.getText().toString());
+    public void onRerack(View view) {
+        int iRun = Integer.parseInt(textview_possiblerun.getText().toString());
+		possiblerun = 14 + iRun;
 		textview_possiblerun.setText(String.valueOf(possiblerun));
+        switch (playerAtTable) {
+            case 1:
+                if (iRun <= 15) {
+                    scoretable_player1.setProvisionalTotalScore(iRun);
+                } else {
+                    scoretable_player1.setProvisionalTotalScore(15);
+                }
+                break;
+            case 2:
+                if (iRun <= 15) {
+                    scoretable_player2.setProvisionalTotalScore(iRun);
+                } else {
+                    scoretable_player2.setProvisionalTotalScore(15);
+                }
+                break;
+            default:
+                break;
+        }
+
+        ((Button) findViewById(R.id.button_NoScore)).setEnabled(false);
         gameinfo.setLastAction(GameInfo.LAST_ACTION_RERACK);
 	}
 
@@ -183,6 +204,15 @@ public class GameActivity extends FragmentActivity {
         ((Button) findViewById(R.id.button_UpdateScore)).setEnabled(false);
         ((Button) findViewById(R.id.button_NoScore)).setEnabled(false);
         ((Button) findViewById(R.id.button_Rerack)).setEnabled(false);
+
+        ((Button) findViewById(R.id.button_UpdateScore)).setVisibility(View.INVISIBLE);
+        ((Button) findViewById(R.id.button_NoScore)).setVisibility(View.INVISIBLE);
+        ((Button) findViewById(R.id.button_Rerack)).setVisibility(View.INVISIBLE);
+        ((TextView) findViewById(R.id.textView_PossibleRunText)).setVisibility(View.INVISIBLE);
+        ((TextView) findViewById(R.id.textView_PossibleRun)).setVisibility(View.INVISIBLE);
+
+        ((LinearLayout) findViewById(R.id.gameLayout)).removeView((LinearLayout) findViewById(R.id.linearLayout_ScoreButtons));
+        ((LinearLayout) findViewById(R.id.linearLayout_NewGameButton)).setVisibility(View.VISIBLE);
 
         TextView endofgame = (TextView) findViewById(R.id.textView_endofgame);
         endofgame.setVisibility(1);
@@ -230,6 +260,7 @@ public class GameActivity extends FragmentActivity {
         NumberPicker ballsontable = (NumberPicker) dialog.findViewById(R.id.numberPicker_ballsontable);
         ballsontable.setMaxValue(possiblerun>15?15:possiblerun);
         ballsontable.setMinValue(2);
+        ballsontable.setValue(possiblerun>15?15:possiblerun);
         
         //set up foul button
         final ToggleButton button_foul = (ToggleButton) dialog.findViewById(R.id.button_foul);
@@ -277,7 +308,9 @@ public class GameActivity extends FragmentActivity {
                 possiblerun = Math.abs(picker.getValue());
                 textview_possiblerun.setText(String.valueOf(possiblerun));
                 foul = false;
-
+                if (findViewById(R.id.button_NoScore) != null) {
+                    ((Button) findViewById(R.id.button_NoScore)).setEnabled(true);
+                }
 				dialog.dismiss();
 			}
 		});

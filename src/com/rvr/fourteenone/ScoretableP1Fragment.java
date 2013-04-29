@@ -33,6 +33,10 @@ public class ScoretableP1Fragment extends ScoreTable {
 		super.addRow(scoretable, turn, vRun, vFoul);
 	}
 
+    public void setProvisionalTotalScore(int vRun) {
+        super.setProvisionalTotalScore(scoretable, vRun);
+    }
+
     public int removeLastRow() {
         return super.removeLastRow(scoretable);
     }

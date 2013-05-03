@@ -200,35 +200,33 @@ public class GameActivity extends FragmentActivity {
         gameinfo.setLastAction(GameInfo.LAST_ACTION_RERACK);
 	}
 
-    public void onEndOfGame() {
+    public void onEndOfGame(String winner) {
         ((Button) findViewById(R.id.button_UpdateScore)).setEnabled(false);
         ((Button) findViewById(R.id.button_NoScore)).setEnabled(false);
         ((Button) findViewById(R.id.button_Rerack)).setEnabled(false);
 
-        ((Button) findViewById(R.id.button_UpdateScore)).setVisibility(View.INVISIBLE);
-        ((Button) findViewById(R.id.button_NoScore)).setVisibility(View.INVISIBLE);
-        ((Button) findViewById(R.id.button_Rerack)).setVisibility(View.INVISIBLE);
-        ((TextView) findViewById(R.id.textView_PossibleRunText)).setVisibility(View.INVISIBLE);
-        ((TextView) findViewById(R.id.textView_PossibleRun)).setVisibility(View.INVISIBLE);
+//        ((Button) findViewById(R.id.button_UpdateScore)).setVisibility(View.INVISIBLE);
+//        ((Button) findViewById(R.id.button_NoScore)).setVisibility(View.INVISIBLE);
+//        ((Button) findViewById(R.id.button_Rerack)).setVisibility(View.INVISIBLE);
+//        ((TextView) findViewById(R.id.textView_PossibleRunText)).setVisibility(View.INVISIBLE);
+//        ((TextView) findViewById(R.id.textView_PossibleRun)).setVisibility(View.INVISIBLE);
 
         ((LinearLayout) findViewById(R.id.gameLayout)).removeView((LinearLayout) findViewById(R.id.linearLayout_ScoreButtons));
-        ((LinearLayout) findViewById(R.id.linearLayout_NewGameButton)).setVisibility(View.VISIBLE);
+        ((LinearLayout) findViewById(R.id.gameLayout)).removeView((LinearLayout) findViewById(R.id.linearLayout_RunElements));
 
-        TextView endofgame = (TextView) findViewById(R.id.textView_endofgame);
-        endofgame.setVisibility(1);
-        endofgame.setShadowLayer(2f, 2f, 2f, Color.WHITE);
-        endofgame.setText("Game winner!");
+        EndGameFragment endgame = EndGameFragment.newInstance(
+                winner,
+                scoretable_player1.getHighRun(),
+                scoretable_player2.getHighRun(),
+                scoretable_player1.getAvgRun(),
+                scoretable_player2.getAvgRun(),
+                scoretable_player1.getFouls(),
+                scoretable_player2.getFouls()
+        );
 
-        Button startnewgame = ((Button) findViewById(R.id.button_startnewgame));
-        startnewgame.setVisibility(1);
-        final Intent i = new Intent(this, MainActivity.class);
-        startnewgame.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
-            }
-        });
+        getFragmentManager().beginTransaction()
+                .add(R.id.gameLayout, endgame)
+                .commit();
     }
 
     public void onClickNoScore(View view) {

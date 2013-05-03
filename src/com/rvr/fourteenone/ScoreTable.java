@@ -19,6 +19,8 @@ import android.view.ViewGroup;
 public class ScoreTable extends Fragment {
 	
 	private GameInfo gameinfo = null;
+    private int avg;
+    private int fouls;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceBundle, int layout) {
 		return inflater.inflate(layout, container, false);		
@@ -150,7 +152,8 @@ public class ScoreTable extends Fragment {
 
         if (iScore >= gameinfo.getTarget()) {
             // Winnaar is bekend!
-            ((GameActivity)getActivity()).onEndOfGame();
+            String winner = ((TextView) linearlayout.findViewById(R.id.playername)).getText().toString();
+            ((GameActivity)getActivity()).onEndOfGame(winner);
         }
 	}
 
@@ -208,4 +211,44 @@ public class ScoreTable extends Fragment {
             name.setShadowLayer(0,0,0,0);
         }
 	}
+
+    public int getHighRun(LinearLayout linearlayout) {
+
+        int highrun = 0;
+        int total = 0;
+        fouls = 0;
+        int nr = 0;
+
+        TableLayout scoretable = (TableLayout) linearlayout.findViewById(R.id.scoretable);
+
+        for (int i = 1; i<scoretable.getChildCount();i++) {
+            TableRow child = (TableRow) scoretable.getChildAt(i);
+
+            nr = Integer.parseInt((String) ((TextView) child.getChildAt(0)).getText());
+            int run = Integer.parseInt((String) ((TextView) child.getChildAt(1)).getText());
+            if (run > highrun) {
+                highrun = run;
+            }
+
+            fouls += Integer.parseInt((String) ((TextView) child.getChildAt(2)).getText());
+            total = Integer.parseInt((String) ((TextView) child.getChildAt(3)).getText());
+        }
+
+        if (nr > 0) {
+            avg = Math.round(total/nr);
+        } else {
+            avg = 0;
+        }
+
+        return highrun;
+    }
+
+    public int getAvgRun() {
+        return avg;
+    }
+
+    public int getFouls() {
+        return fouls;
+    }
+
 }

@@ -43,6 +43,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout_RunElements"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -110,7 +111,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <!--LinearLayout
         android:id="@+id/linearLayout_NewGameButton"
         android:orientation="horizontal"
         android:layout_width="fill_parent"
@@ -135,6 +136,6 @@
             android:id="@+id/button_startnewgame"
             android:visibility="invisible"/>
 
-    </LinearLayout>
+    </LinearLayout-->
 
 </LinearLayout>

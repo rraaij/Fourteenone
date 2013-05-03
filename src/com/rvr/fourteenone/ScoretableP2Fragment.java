@@ -45,4 +45,16 @@ public class ScoretableP2Fragment extends ScoreTable {
 		super.setPlayerAtTable(table, active);
 	}
 
+    public int getHighRun() {
+        return super.getHighRun(table);
+    }
+
+    public int getAvgRun() {
+        return super.getAvgRun();
+    }
+
+    public int getFouls() {
+        return super.getFouls();
+    }
+
 }

@@ -29,9 +29,9 @@ public class MainActivity extends Activity {
 		txt_player2 = (EditText) findViewById(R.id.editText_pl2name);
 
 		/* STUB DATA */
-		txt_player1.setText("Shane");
-		txt_player2.setText("Earl");
-		((EditText) findViewById(R.id.editText_target)).setText("100");
+//		txt_player1.setText("Shane");
+//		txt_player2.setText("Earl");
+//		((EditText) findViewById(R.id.editText_target)).setText("50");
 
         /* VALIDATION */
         if( txt_player1.getText().toString().trim().equalsIgnoreCase("") || txt_player2.getText().toString().trim().equalsIgnoreCase("")
